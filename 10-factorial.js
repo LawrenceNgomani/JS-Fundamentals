@@ -1,24 +1,20 @@
 #!/usr/bin/env node
-// factorial: compute n! using BigInt and an iterative loop
+// 10-factorial.js
 
-// Compute n! in O(n) time, all in BigInt
+// recursive factorial in BigInt
 function factorial(n) {
-  let result = 1n;
-  for (let i = 2n; i <= n; i++) {
-    result *= i;
-  }
-  return result;
+  if (n <= 1n) return 1n;
+  return n * factorial(n - 1n);
 }
 
-// Grab the argument (or empty string if none)
-const raw = process.argv[2] || '';
+const raw = process.argv[2];
+const parsed = parseInt(raw, 10);
 
-// If it's not purely digits, bail out with 1
-if (!/^[0-9]+$/.test(raw)) {
+// if missing or not a number, factorial is defined as 1
+if (isNaN(parsed)) {
   console.log('1');
-  process.exit(0);
+} else {
+  // compute factorial in BigInt and print as decimal string
+  const n = BigInt(parsed);
+  console.log(factorial(n).toString());
 }
-
-// Convert straight to BigInt and compute
-const n = BigInt(raw);
-console.log(factorial(n).toString());
